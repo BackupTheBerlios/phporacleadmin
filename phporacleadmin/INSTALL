@@ -1,0 +1,42 @@
+
+phpOracleAdmin - Installation and Requirements 
+
+Unpack the tarball and modify the config.inc.php to
+your system environment.
+
+phpOracleAdmin needs php 4 with oci8 support to run 
+and is only tested with Oracle 8.1.5 and upper versions.
+(maybe it runs at 8.0.x at upper)
+
+If you want to use additions session features, your php 4 
+must be installed with sessionsupport and because of some 
+small problems, please enable cookies at your browser. 
+
+If you have Problems here are some hints:
+
+make sure, that you have the complete oracle environment vars 
+in the webserver environment BEFORE start the server. 
+important are:
+
+ORACLE_HOME
+ORA_NLS33
+NLS_LANG
+
+also be sure, the the databasename is correct written and 
+configured in the tnsnames.ora
+
+IMPORTANT:
+If you want to use additional php 4 sessionbased functions,
+be sure, that the sessiondata (saved by the webserver at 
+filesystem) sre not readable by others !
+Databased accoutdatas were stored there. 
+If you are not sure disable phpOracleAdmins session support
+by setting:
+$ENABLE_SESSIONS_FUNCTIONS=FALSE;
+in the config.inc.php.
+
+Usage Hint:
+Because this is an webapplication, disable all objects 
+that you dont need (eg. triggers if you do not have some or
+you are not interested in some) this make the loading time 
+shorter and saves traffic.

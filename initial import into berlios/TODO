@@ -1,0 +1,9 @@
+- table content modifying (insert, delete, update)
+- database search
+- build in menu structure like in table section everywhere
+- inline docu
+- html output debug
+- table datacaching in session
+- html gzipped html output
+- constraint search by id
+- constraint type (full text)
