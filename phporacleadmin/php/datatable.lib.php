@@ -33,6 +33,7 @@ class DataTable extends Database {
     var $fieldtypes; // holds array ($fieldname=><type>, ... ) for tablehead
     var $rownum=FALSE;
     var $sortabletypes;
+    var $ephtml=''; // execution plan html
 
     /**
      * @desc constructor
@@ -98,8 +99,9 @@ class DataTable extends Database {
     }
     /**
      * @desc executes the query and form the data array
+     * @param bool execution plan used (overrides of the settings)
      */
-    function loadData(){
+    function loadData($with_plan=true){
      	if(!$this->sql){
 	    trace(2, __LINE__, __FILE__, "No Sql given");
 	    return FALSE;
@@ -107,11 +109,11 @@ class DataTable extends Database {
 	$sql=$this->sql;
 
 	if(preg_match('/(SELECT|SHOW)/i', $sql)){
-	    $rowsql=sprintf("SELECT count(*) FROM (%s)", $sql);
+	    $rowsql=sprintf("SELECT count(1) FROM (%s)", $sql);
 	    $stmt=$this->parse($rowsql);
 	    $this->execute($stmt);
 	    $foo=$this->nextrow($stmt);
-	    $this->rownum=$foo["COUNT(*)"];
+	    $this->rownum=$foo["COUNT(1)"];
 	}
 	
 	if($this->sorting && $this->sortfield && $this->sortorder){
@@ -125,6 +127,72 @@ class DataTable extends Database {
 	    $this->error=FALSE;
 	    $this->data=FALSE;
 	    return FALSE;
+	}
+
+	// execution plan stuff
+	if($with_plan && $GLOBALS["CF"]->get("ENABLE_QUERY_EXECUTION_PLAN")){
+	    // add execution plan stuff
+
+	    $planname=time();
+	    $epsql="explain plan set statement_id='$planname' for ".$sql;
+	    // extra db
+	    $db=new Database($GLOBALS['Server']);
+	    $epstmt=$db->parse($epsql);
+	    if(!$db->execute($epstmt) && $db->errorcode=='2402'){
+		$plansql="create table PLAN_TABLE (
+		    statement_id    varchar2(30),
+		    timestamp       date,
+		    remarks         varchar2(80),
+		    operation       varchar2(30),
+		    options         varchar2(30),
+		    object_node     varchar2(128),
+		    object_owner    varchar2(30),
+		    object_name     varchar2(30),
+		    object_instance numeric,
+		    object_type     varchar2(30),
+		    optimizer       varchar2(255),
+		    search_columns  number,
+		    id              numeric,
+		    parent_id       numeric,
+		    position        numeric,
+		    cost            numeric,
+		    cardinality     numeric,
+		    bytes           numeric,
+		    other_tag       varchar2(255),
+		    partition_start varchar2(255),
+		    partition_stop  varchar2(255),
+		    partition_id    numeric,
+		    other           long,
+		    distribution    varchar2(30))";
+		$epstmt=$db->parse($plansql);
+		$db->execute($epstmt);
+	    }
+	    $epstmt=$db->parse($epsql);
+	    $db->execute($epstmt);
+	   
+	    $tbl=new DataTable($GLOBALS['Server']);
+	    $space=chr(160);
+	    $epsql="select decode(id, 0, '', ".
+		"lpad('$space', 2+(level-1))||level||'.'||position)||'$space'||".
+		"operation||'$space'||options||'$space'||object_name||'$space'||".
+		"object_type||'$space'||".
+		"decode(id,0,'Cost = '||position) Query_plan ".
+		"from plan_table ".
+		"connect by prior id=parent_id ".
+		"and statement_id='$planname' ".
+		"start with id=0 and statement_id='$planname'";
+	    $tbl->setSql($epsql);
+	    $tbl->loadData(false);
+	    $tbl->setColorToggle(1);
+	    $tbl->renderHTML();
+	    $this->ephtml=$tbl->getHTML();
+	    
+	    $epstmt=$db->parse("delete plan_table where statement_id='$planname'");
+	    if(!$db->execute($epstmt)){
+		$db->error=FALSE;
+		$db->data=FALSE;
+		return FALSE;
+	    }
 	}
 
 	if(preg_match('/(DELETE|UPDATE)/i', $this->sql)){
@@ -249,6 +317,9 @@ class DataTable extends Database {
 	}
 	$html.="</TABLE>\n";
 	$this->htmldata=$html;
+	if($GLOBALS["CF"]->get("ENABLE_QUERY_EXECUTION_PLAN")){
+	    $this->htmldata=$this->ephtml.$html;
+	}
 	return TRUE;
     }
     /**

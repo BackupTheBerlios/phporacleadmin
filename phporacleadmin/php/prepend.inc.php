@@ -86,6 +86,7 @@ class Configuration {
 	$this->setConfigBaseData("TABLE_FIELDLENGTH_LIMIT", $TABLE_FIELDLENGTH_LIMIT);
 	$this->setConfigBaseData("ENABLE_HTML_OPTIMIZATION", $ENABLE_HTML_OPTIMIZATION);
 	$this->setConfigBaseData("ENABLE_HTML_TREE", $ENABLE_HTML_TREE);
+	$this->setConfigBaseData("ENABLE_QUERY_EXECUTION_PLAN", $ENABLE_QUERY_EXECUTION_PLAN);
     }
 
     /**
@@ -164,6 +165,7 @@ switch($mode){
 	 $CF->set("TABLE_FIELDLENGTH_LIMIT", getData("FORM_TABLE_FIELDLENGTH_LIMIT", "integer"));
 	 $CF->set("ENABLE_HTML_OPTIMIZATION", getData("FORM_ENABLE_HTML_OPTIMIZATION", "integer"));
 	 $CF->set("ENABLE_HTML_TREE", getData("FORM_ENABLE_HTML_TREE", "integer"));
+	 $CF->set("ENABLE_QUERY_EXECUTION_PLAN", getData("FORM_ENABLE_QUERY_EXECUTION_PLAN", "integer"));
 	 break;
      default:
      }// end switch submode

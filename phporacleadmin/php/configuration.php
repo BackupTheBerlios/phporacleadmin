@@ -82,6 +82,10 @@ $html.="\n<tr><td>Enable HTML Tree</td><td><input type=checkbox name=\"FORM_ENAB
 $html.=$CF->get("ENABLE_HTML_TREE") ? "checked" : "";
 $html.="></td><td>If you don't want to use Javascript Tree (or your Browser not works correctly with it) you can use the HTML Tree</td></tr>";
 
+$html.="\n<tr><td>Enable Query Execution Plan</td><td><input type=checkbox name=\"FORM_ENABLE_QUERY_EXECUTION_PLAN\" value=\"1\" ";
+$html.=$CF->get("ENABLE_QUERY_EXECUTION_PLAN") ? "checked" : "";
+$html.="></td><td>It enables the output of the execution plan of a statement. A table is generated for that at the html-widget and (if not found) a PLAN_TABLE.</td></tr>";
+
 $html.="\n</table>";
 $html.="<br><center><input type=submit value=\"Apply\"></center>";
 $html.="\n</form>";
