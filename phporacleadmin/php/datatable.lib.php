@@ -132,7 +132,6 @@ class DataTable extends Database {
 	// execution plan stuff
 	if($with_plan && $GLOBALS["CF"]->get("ENABLE_QUERY_EXECUTION_PLAN")){
 	    // add execution plan stuff
-
 	    $planname=time();
 	    $epsql="explain plan set statement_id='$planname' for ".$sql;
 	    // extra db
@@ -166,10 +165,11 @@ class DataTable extends Database {
 		    distribution    varchar2(30))";
 		$epstmt=$db->parse($plansql);
 		$db->execute($epstmt);
-	    }
-	    $epstmt=$db->parse($epsql);
-	    $db->execute($epstmt);
-	   
+		// build plan again
+		$epstmt=$db->parse($epsql);
+		$db->execute($epstmt);
+	    } 
+
 	    $tbl=new DataTable($GLOBALS['Server']);
 	    $space=chr(160);
 	    $epsql="select decode(id, 0, '', ".
@@ -185,6 +185,7 @@ class DataTable extends Database {
 	    $tbl->loadData(false);
 	    $tbl->setColorToggle(1);
 	    $tbl->renderHTML();
+	    unset($this->ephtml);
 	    $this->ephtml=$tbl->getHTML();
 	    
 	    $epstmt=$db->parse("delete plan_table where statement_id='$planname'");
