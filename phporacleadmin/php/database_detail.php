@@ -47,7 +47,7 @@ switch($mode){
 	     "<input type=\"hidden\" name=\"Server\" value=\"$Server\">".  
 	     "<input type=\"hidden\" name=\"mode\" value=\"main\">".
 	     "<input type=\"hidden\" name=\"submode\" value=\"execute\">".
-	     "<textarea name=\"statement\" cols=\"70\" rows=\"3\" wrap=\"VIRTUAL\" style=\"width: 300px\">".
+	     "<textarea name=\"statement\" cols=\"80\" rows=\"5\" wrap=\"VIRTUAL\" style=\"width: 300px\">".
 	     $statement."</textarea><br>".
 	     "<input type=\"Submit\" name=\"BUTTON\" value=\"Execute\">";
 	 $html.="</form></td></tr></table>";
@@ -67,7 +67,7 @@ switch($mode){
 	     "<input type=\"hidden\" name=\"Server\" value=\"$Server\">".
 	     "<input type=\"hidden\" name=\"mode\" value=\"main\">".
 	     "<input type=\"hidden\" name=\"submode\" value=\"execute\">".
-	     "<textarea name=\"statement\" cols=\"60\" rows=\"3\" wrap=\"VIRTUAL\" style=\"width: 300px\"></textarea><br>".
+	     "<textarea name=\"statement\" cols=\"80\" rows=\"5\" wrap=\"VIRTUAL\" style=\"width: 300px\"></textarea><br>".
 	     "<input type=\"Submit\" name=\"BUTTON\" value=\"Execute\">";
 	 $html.="</form></td></tr></table></p>";
      }
