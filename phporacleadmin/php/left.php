@@ -93,14 +93,15 @@ for($Server=0; $Server<count($DB->DBDatas); $Server++){
 	    $func=new OraFunction($Server);
 	    $func->getNames();
 	    foreach($func->names as $username => $names){
+		$usernameraw=rawurlencode($username);
 		$user = $tree->addFolder($functions, 
 					 $username."&nbsp;(".count($names).")", 
-					 "func_main.php?Server=$Server&User=$username&".SID);
+					 "func_main.php?Server=$Server&User=$usernameraw&".SID);
 		if(is_array($names)){
 		    foreach($names as $name){
 			$tree->addDocument($user, 
 					   $name, 
-					   "func_detail.php?Server=$Server&Functionname=$name&User=$username&".SID);	
+					   "func_detail.php?Server=$Server&Functionname=$name&User=$usernameraw&".SID);	
 		    }
 		}
 	    }	    
@@ -118,14 +119,15 @@ for($Server=0; $Server<count($DB->DBDatas); $Server++){
 	    $ind=new Index($Server);
 	    $ind->getNames();
 	    foreach($ind->names as $username => $names){
+		$usernameraw=rawurlencode($username);
 		$user = $tree->addFolder($indexes , 
 					 $username."&nbsp;(".count($names).")", 
-					 "index_main.php?Server=$Server&User=$username&".SID);
+					 "index_main.php?Server=$Server&User=$usernameraw&".SID);
 		if(is_array($names)){
 		    foreach($names as $name){
 			$tree->addDocument($user, 
 					   $name, 
-					   "index_detail.php?Server=$Server&Indexname=$name&User=$username&".SID);	
+					   "index_detail.php?Server=$Server&Indexname=$name&User=$usernameraw&".SID);	
 		    }
 		}
 	    }
@@ -142,14 +144,15 @@ for($Server=0; $Server<count($DB->DBDatas); $Server++){
 	    $pac=new Package($Server);
 	    $pac->getNames();
 	    foreach($pac->names as $username => $names){
+		$usernameraw=rawurlencode($username);
 		$user = $tree->addFolder($pacs , 
 					 $username."&nbsp;(".count($names).")", 
-					 "pack_main.php?Server=$Server&User=$username&".SID);
+					 "pack_main.php?Server=$Server&User=$usernameraw&".SID);
 		if(is_array($names)){
 		    foreach($names as $name){
 			$tree->addDocument($user, 
 					   $name, 
-					   "pack_detail.php?Server=$Server&Packagename=$name&User=$username&".SID);	
+					   "pack_detail.php?Server=$Server&Packagename=$name&User=$usernameraw&".SID);	
 		    }
 		}
 	    }	    
@@ -166,14 +169,15 @@ for($Server=0; $Server<count($DB->DBDatas); $Server++){
 	    $proc=new Procedure($Server);
 	    $proc->getNames();
 	    foreach($proc->names as $username => $names){
+		$usernameraw=rawurlencode($username);
 		$user = $tree->addFolder($procs , 
 					 $username."&nbsp;(".count($names).")", 
-					 "proc_main.php?Server=$Server&User=$username&".SID);
+					 "proc_main.php?Server=$Server&User=$usernameraw&".SID);
 		if(is_array($names)){
 		    foreach($names as $name){
 			$tree->addDocument($user, 
 					   $name, 
-					   "proc_detail.php?Server=$Server&Procedurename=$name&User=$username&".SID);
+					   "proc_detail.php?Server=$Server&Procedurename=$name&User=$usernameraw&".SID);
 		    }
 		}
 	    }
@@ -190,14 +194,15 @@ for($Server=0; $Server<count($DB->DBDatas); $Server++){
 	    $seq=new Sequence($Server);
 	    $seq->getNames();
 	    foreach($seq->names as $username => $names){
+		$usernameraw=rawurlencode($username);
 		$user = $tree->addFolder($sequences, 
 					 $username."&nbsp;(".count($names).")", 
-					 "seq_main.php?Server=$Server&User=$username&".SID); 
+					 "seq_main.php?Server=$Server&User=$usernameraw&".SID); 
 		if(is_array($names)){
 		    foreach($names as $name){
 			$tree->addDocument($user, 
 					   $name, 
-					   "seq_detail.php?Server=$Server&Sequencename=$name&User=$username&".SID);
+					   "seq_detail.php?Server=$Server&Sequencename=$name&User=$usernameraw&".SID);
 			
 		    }
 		}
@@ -215,13 +220,14 @@ for($Server=0; $Server<count($DB->DBDatas); $Server++){
 	    $tbl=new Table($Server);
 	    $tbl->getNames();
 	    foreach($tbl->names as $username => $names){
+		$usernameraw=rawurlencode($username);
 		$user=$tree->addFolder($tables , $username."&nbsp;(".count($names).")", 
-				       "tbl_main.php?Server=$Server&User=$username&".SID);
+				       "tbl_main.php?Server=$Server&User=$usernameraw&".SID);
 		if(is_array($names)){
 		    foreach($names as $name){
 			$tree->addDocument($user, 
 					   $name, 
-					   "tbl_detail.php?Server=$Server&Tablename=$name&User=$username&".SID);
+					   "tbl_detail.php?Server=$Server&Tablename=$name&User=$usernameraw&".SID);
 		    }
 		}
 	    }
@@ -278,14 +284,15 @@ for($Server=0; $Server<count($DB->DBDatas); $Server++){
 	    $trigger=new Trigger($Server);
 	    $trigger->getNames();
 	    foreach($trigger->names as $username => $names){
+		$usernameraw=rawurlencode($username);
 		$user = $tree->addFolder($triggers, 
 					 $username."&nbsp;(".count($names).")", 
-					 "tri_main.php?Server=$Server&User=$username&".SID);
+					 "tri_main.php?Server=$Server&User=$usernameraw&".SID);
 		if(is_array($names)){
 		    foreach($names as $name){
 			$tree->addDocument($user, 
 					   $name, 
-					   "tri_detail.php?Server=$Server&Triggername=$name&User=$username&".SID);	
+					   "tri_detail.php?Server=$Server&Triggername=$name&User=$usernameraw&".SID);	
 		    }
 		}
 	    }
@@ -302,14 +309,15 @@ for($Server=0; $Server<count($DB->DBDatas); $Server++){
 	    $type=new Type($Server);
 	    $type->getNames();
 	    foreach($type->names as $username => $names){
+		$usernameraw=rawurlencode($username);
 		$user = $tree->addFolder($types, 
 					 $username."&nbsp;(".count($names).")", 
-					 "type_main.php?Server=$Server&User=$username&".SID);
+					 "type_main.php?Server=$Server&User=$usernameraw&".SID);
 		if(is_array($names)){
 		    foreach($names as $name){
 			$tree->addDocument($user, 
 					   $name, 
-					   "type_detail.php?Server=$Server&Typename=$name&User=$username&".SID);	
+					   "type_detail.php?Server=$Server&Typename=$name&User=$usernameraw&".SID);	
 		    }
 		}
 	    }
@@ -326,14 +334,15 @@ for($Server=0; $Server<count($DB->DBDatas); $Server++){
 	    $view=new View($Server);
 	    $view->getNames();
 	    foreach($view->names as $username => $names){
+		$usernameraw=rawurlencode($username);
 		$user = $tree->addFolder($views, 
 					 $username."&nbsp;(".count($names).")", 
-					 "view_main.php?Server=$Server&User=$username&".SID);
+					 "view_main.php?Server=$Server&User=$usernameraw&".SID);
 		if(is_array($names)){
 		    foreach($names as $name){
 			$tree->addDocument($user, 
 					   $name, 
-					   "view_detail.php?Server=$Server&Viewname=$name&User=$username&".SID);	
+					   "view_detail.php?Server=$Server&Viewname=$name&User=$usernameraw&".SID);	
 		    }
 		}
 	    }
